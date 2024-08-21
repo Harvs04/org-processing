@@ -11,16 +11,52 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link href="{{ route('create-user') }}" :active="request()->routeIs('create-user')">
-                        {{ __('Create User') }}
-                    </x-nav-link>
-                </div>
+                @if (Auth::user()->role === "Admin")
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="{{ route('create-user') }}" :active="request()->routeIs('create-user')">
+                            {{ __('Create User') }}
+                        </x-nav-link>
+                    </div>
+                @elseif (Auth::user()->role === "Developer")
+
+                @elseif (Auth::user()->role === "Applicant")
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="{{ route('applicant-dashboard') }}" :active="request()->routeIs('applicant-dashboard')">
+                            {{ __('Dashboard') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="#" :active="request()->routeIs('application-process')">
+                            {{ __('My Application Process') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="#" :active="request()->routeIs('panel-interview')">
+                            {{ __('Panel Interview') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="#" :active="request()->routeIs('reporting')">
+                            {{ __('Reporting') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="#" :active="request()->routeIs('mdi')">
+                            {{ __('Million Dollar Idea') }}
+                        </x-nav-link>
+                    </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="#" :active="request()->routeIs('finals')">
+                            {{ __('Finals') }}
+                        </x-nav-link>
+                    </div>
+                    
+                @endif
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">

@@ -1,18 +1,15 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <!-- Meta tags for character set, viewport settings, and compatibility -->
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+            Welcome back, {{ Auth::user()->nickname }}!
+        </h2>
+    </x-slot>
 
-    <!-- Title of the document -->
-    <title>Document</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body>
-    <div class="flex items-center justify-center h-screen">
-        <a href="/user-create">Create User</a>
+    <div class="py-12">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-xl sm:rounded-lg">
+                <x-applicant-welcome />
+            </div>
+        </div>
     </div>
-</body>
+</x-app-layout>
