@@ -45,7 +45,7 @@ class UserTable extends Component
         
         $query->orderBy($this->sortField, $this->sortAsc ? 'asc' : 'desc');
 
-        $users = $query->paginate(self::$PER_PAGE);
+        $users = $query->where('role', 'Applicant')->paginate(self::$PER_PAGE);
 
         $currentUserCount = $users->total(); // count current users fetched
 
