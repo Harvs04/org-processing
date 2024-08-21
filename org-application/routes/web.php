@@ -25,7 +25,11 @@ Route::middleware([
 
     Route::middleware([CheckApplicantRole::class])->group(function () {
         Route::get('/applicant-dashboard', function () {
-            return view('Admin.dashboard');
+            return view('Applicant.dashboard');
         })->name('applicant-dashboard');
+
+        Route::get('/panel-interview/{nickname}', function ($nickname) {
+            return view('Applicant.panel-interview');
+        })->name('panel-interview');
     });
 });

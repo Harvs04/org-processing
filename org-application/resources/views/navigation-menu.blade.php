@@ -36,7 +36,7 @@
                         </x-nav-link>
                     </div>
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link href="#" :active="request()->routeIs('panel-interview')">
+                        <x-nav-link href="{{ route('panel-interview', ['nickname' => Auth::user()->nickname]) }}" :active="request()->routeIs('panel-interview')">
                             {{ __('Panel Interview') }}
                         </x-nav-link>
                     </div>
