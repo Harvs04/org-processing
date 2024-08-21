@@ -84,8 +84,15 @@
                 @enderror
             </div>
         </div>
-        @if(session('success'))
-            <span class="text-white text-center bg-green-500 rounded px-2 py-1 md:w-1/2 md:self-end">{{ session('success') }}</span>
+        @if (session('success'))
+            <div id="success-message" class="flex justify-between items-center border border-green-500 bg-green-100 text-green-600 px-4 py-2 rounded relative mt-8">
+                <span class="text-sm">{{ session('success') }}</span>
+                <button type="button" onclick="document.getElementById('success-message').style.display='none'" class="text-green-600 ml-2 focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+            </div>
         @endif
         <div class="mt-10 flex flex-row gap-4 self-end">
             <button type="button" wire:click="clear" class="text-gray-700 text-sm text-center font-bold border border-gray-600 rounded px-5 py-2">

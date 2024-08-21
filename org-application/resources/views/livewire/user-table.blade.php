@@ -1,4 +1,4 @@
-<div wire:poll.keep-alive.30s class="flex flex-col h-full w-full lg:10/12 xl:w-full px-5 border-4 border-red-500">
+<div wire:poll.keep-alive.30s class="flex flex-col h-full w-full lg:10/12 xl:w-full px-5">
     <div class="flex flex-row justify-between">
         <h1 class="text-2xl text-white sm:text-3xl md:text-4xl lg:text-4xl font-bold">APPLICANTS</h1>
         <div class="flex flex-col gap-6">
@@ -18,20 +18,10 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="search" wire:model.live="search" id="default-search" class="w-full sm:w-72 pl-10 pr-2 py-1.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 " placeholder="Name, Email, ID" required />
+                <input type="search" wire:model.live="search" id="default-search" class="w-full sm:w-72 pl-10 pr-2 py-1.5 ps-10 text-sm text-gray-900 border border-gray-300 rounded-md bg-gray-50 " placeholder="Name, Nickname, Email" required />
             </div>
         </div>  
     </div>
-    @if (session('success'))
-        <div id="success-message" class="flex justify-between items-center border border-green-500 bg-green-100 text-green-600 px-4 py-2 rounded relative mt-8">
-            <span class="text-sm">{{ session('success') }}</span>
-            <button onclick="document.getElementById('success-message').style.display='none'" class="text-green-600 ml-2 focus:outline-none">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
-                </svg>
-            </button>
-        </div>
-    @endif
     @if (session('delete'))
         <div id="delete-message" class="flex justify-between items-center border border-green-500 bg-green-100 text-green-600 px-4 py-2 rounded relative mt-8">
             <span class="text-sm">{{ session('delete') }}</span>
@@ -52,11 +42,11 @@
             </button>
         </div>
     @endif
-    <div class="mt-5 shadow-md sm:rounded-lg relative overflow-auto bg-white">
-        <table class="min-w-full text-sm text-left rtl:text-right text-gray-700 relative overflow-x-auto shadow-md sm:rounded-lg">
-            <thead class="text-xs font-medium md:text-sm md:font-semibold">
-                <tr class="text-left">
-                    <th class="pb-4 py-4 pr-2">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg pt-3">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
                         <div class="flex items-center">
                             Name
                             <button wire:click="sortBy('first_name')">
@@ -76,7 +66,7 @@
                             </button>
                         </div>
                     </th>
-                    <th class="pb-4 py-4 pr-5">
+                    <th scope="col" class="px-6 py-3">
                         <div class="flex items-center">
                             Nickname
                             <button wire:click="sortBy('nickname')">
@@ -96,12 +86,12 @@
                             </button>
                         </div>
                     </th>
-                    <th class="pb-4 py-4 pr-5">
+                    <th scope="col" class="px-6 py-3">
                         <div class="flex items-center">
                             FB Account
                         </div>
                     </th>
-                    <th class="pb-4 py-4 pr-5">
+                    <th scope="col" class="px-6 py-3">
                         <div class="flex items-center">
                             Email Address
                             <button wire:click="sortBy('email')">
@@ -121,28 +111,30 @@
                             </button>
                         </div>
                     </th>
-                    <th class="pb-4 py-4 pr-8">
+                    <th scope="col" class="px-6 py-3">
                         Mobile Number
                     </th>
-                    <th class="pb-4 py-4 pr-12">Actions</th>
+                    <th scope="col" class="pb-4 py-4 pr-12 text-center">Actions</th>
                 </tr>
             </thead>
             <tbody class="text-xs md:text-sm">
                 @forelse ($users as $user)
-                    <tr class="text-xs align-top bg-white border hover:bg-zinc-100 md:text-sm lg:text-sm">
-                        <td class="pr-12 py-1 md:py-1 lg:py-1 xl:py-3 2xl:py-4">{{ $user->first_name. " " . $user->last_name}}</td>
-                        <td class="pr-12 py-1 md:py-1 lg:py-1 xl:py-3 2xl:py-4">{{ $user->nickname }}</td>
-                        <td class="pr-12 py-1 md:py-1 lg:py-1 xl:py-3 2xl:py-4">
+                    <tr class="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                        <td class="px-6 py-4">{{ $user->first_name. " " . $user->last_name}}</td>
+                        <td class="px-6 py-4">{{ $user->nickname }}</td>
+                        <td class="px-6 py-4">
                             <a href="{{ $user->fb_profile }}" target="_blank" rel="noopener noreferrer" style="display: inline-block;">
                                 <img src="{{ asset('Facebook-f_Logo-Blue-Logo.wine.svg') }}" alt="Facebook Logo" style="width: 40px;"/>
                             </a>
                         </td>
-                        <td class="pr-12 py-1 md:py-1 lg:py-1 xl:py-3 2xl:py-4">{{ $user->email }}</td>
-                        <td class="pr-12 py-1 md:py-1 lg:py-1 xl:py-3 2xl:py-4">{{ $user->mobile_number }}</td>
-                        <td class="pr-10 lg:py-4">
+                        <td class="px-6 py-4">{{ $user->email }}</td>
+                        <td class="px-6 py-4">{{ $user->mobile_number }}</td>
+                        <td class="px-6 py-4">
                             <div class="flex flex-row gap-6">
                                 <!-- modal component -->
-                                <button type="button" class="text-red-400 underline">Delete</button>
+                                <a href="#" class="font-medium text-green-600 dark:text-green-500 hover:underline">View</a>
+                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                <button type="button" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</button>
                             </div>
                         </td>
                     </tr>
@@ -153,6 +145,7 @@
                 @endforelse
             </tbody>
         </table>
+        
     </div>
     <div class="mt-3">
         {{ $users->links() }}
