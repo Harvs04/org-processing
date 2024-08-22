@@ -18,6 +18,7 @@ return new class extends Migration
                 $table->time('start_time');
                 $table->time('end_time');
                 $table->string('location');
+                $table->enum('status', ['starting', 'ongoing', 'accomplished']);
                 $table->unsignedBigInteger('group_id');
                 $table->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');;
                 $table->timestamps();
