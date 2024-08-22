@@ -71,7 +71,11 @@ class User extends Authenticatable
         ];
     }
 
-    public function groups() {
-        return $this->hasMany(Group::class, 'user_id');
+    public function panel_group() {
+        return $this->hasMany(Group::class, 'user_id')->where('type', 'panel_interview')->one();
+    }
+
+    public function mdi_group() {
+        return $this->hasMany(Group::class, 'user_id')->where('type', 'mdi')->one();
     }
 }

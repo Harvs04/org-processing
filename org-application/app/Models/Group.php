@@ -15,7 +15,7 @@ class Group extends Model
         return $this->hasMany(User::class, 'user_id');
     }
     
-    public function panelInterviews() {
-        return $this->hasMany(PanelInterview::class, 'group_id');
+    public function panel_interview() {
+        return $this->hasMany(PanelInterview::class, 'group_id')->one();
     }
 }
