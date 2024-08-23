@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ApplicantController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Middleware\CheckAdminRole;
 use App\Http\Middleware\CheckApplicantRole;
@@ -28,8 +29,6 @@ Route::middleware([
             return view('Applicant.dashboard');
         })->name('applicant-dashboard');
 
-        Route::get('/panel-interview/{nickname}', function ($nickname) {
-            return view('Applicant.panel-interview');
-        })->name('panel-interview');
+        Route::get('/panel-interview/{nickname}', [ApplicantController::class, 'index'])->name('panel-interview');
     });
 });

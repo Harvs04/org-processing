@@ -10,12 +10,4 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Group extends Model
 {
     use HasFactory;
-
-    public function user() {
-        return $this->hasMany(User::class, 'user_id');
-    }
-    
-    public function panel_interview() {
-        return $this->hasMany(PanelInterview::class, 'group_id')->one();
-    }
 }
