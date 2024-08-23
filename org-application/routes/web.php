@@ -30,5 +30,6 @@ Route::middleware([
         })->name('applicant-dashboard');
 
         Route::get('/panel-interview/{nickname}', [ApplicantController::class, 'index'])->name('panel-interview');
+        Route::get('/reporting/{nickname}', [ApplicantController::class, 'reporting_list'])->name('reporting');
     });
 });

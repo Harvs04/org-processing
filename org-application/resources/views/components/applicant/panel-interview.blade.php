@@ -25,7 +25,7 @@
     @else
         <h1 class="text-2xl font-medium text-gray-900 dark:text-white">
             You have no scheduled panel interview.
-        </h1>
+        </h10>
     @endif
 
     <p class="mt-6 text-gray-500 dark:text-gray-400 leading-relaxed">
@@ -34,10 +34,12 @@
 </div>
 
 <div class="bg-gray-200 dark:bg-gray-800 bg-opacity-25 p-6">
-    <p class="text-gray-500 dark:text-gray-400 leading-relaxed">Your group</p>
+    <h1 class="text-xl text-gray-500 dark:text-gray-400 leading-relaxed">Group {{ $group->applicant_group_id }} members: </h1>
     @if (count($groupmates) > 0)
         @foreach ($groupmates as $member)
-            {{ $member->nickname }}
+            <li class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">
+                {{ $member->last_name . " " . $member->first_name }}
+            </li>
         @endforeach
     @endif
 </div>
