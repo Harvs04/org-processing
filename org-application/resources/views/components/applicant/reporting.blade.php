@@ -1,7 +1,22 @@
 <div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
     <h1 class="text-2xl font-medium text-gray-900 dark:text-white">
-        You may do your reporting during {{ date('F j, Y', strtotime($start_date)) }} until {{ date('F j, Y', strtotime($end_date)) }}.
+        You may do your reporting during 
+        <span class="font-bold">{{ date('F j, Y', strtotime($start_date)) }}</span>
+        until 
+        <span class="font-bold">{{ date('F j, Y', strtotime($end_date)) }}</span>.
     </h1>
+    @php
+        $progress = $progress_badge($accomplished_reporting_count, $total_reporting_count);
+    @endphp
+    <div class="flex flex-row items-center gap-2 mt-2">
+        <p class="text-gray-500 dark:text-gray-400 leading-relaxed">
+            Reporting Completed: 
+        </p>
+        <span class="{{ $progress }} text-sm font-medium me-2 px-2.5 py-0.5 rounded inline-flex items-center">{{ $accomplished_reporting_count . "/" . $total_reporting_count }}</span>
+    </div>
+
+
+    
     <p class="mt-6 text-gray-500 dark:text-gray-400 leading-relaxed">
         This simple laravel application simulates the application process for the upcoming batch of developers for the Alliance of Computer Science Students - UPLB. 
     </p>
@@ -25,8 +40,12 @@
             <ol class="list-decimal ml-16 text-md">
                 @foreach ($developers['Academic'] as $developer)
                     <li class="my-1">
-                        {{ $developer->first_name . ' "' . $developer->nickname . '" ' . $developer->last_name }}
+                        {{ $developer['developer']->first_name . ' "' . $developer['developer']->nickname . '" ' . $developer['developer']->last_name }}
                     </li>
+                    @php
+                        $statusDetails = $status_badge($developer);
+                    @endphp
+                    <span class="{{ $statusDetails['class'] }} text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{ $statusDetails['text'] }}</span>
                 @endforeach
             </ol>
         </div>
@@ -45,8 +64,12 @@
             <ol class="list-decimal ml-16 text-md">
                 @foreach ($developers['Logistics'] as $developer)
                     <li class="my-1">
-                        {{ $developer->first_name . ' "' . $developer->nickname . '" ' . $developer->last_name }}
+                        {{ $developer['developer']->first_name . ' "' . $developer['developer']->nickname . '" ' . $developer['developer']->last_name }}
                     </li>
+                    @php
+                        $statusDetails = $status_badge($developer);
+                    @endphp
+                    <span class="{{ $statusDetails['class'] }} text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{ $statusDetails['text'] }}</span>
                 @endforeach
             </ol>
         </div>
@@ -65,8 +88,12 @@
             <ol class="list-decimal ml-16 text-md">
                 @foreach ($developers['Membership'] as $developer)
                     <li class="my-1">
-                        {{ $developer->first_name . ' "' . $developer->nickname . '" ' . $developer->last_name }}
+                        {{ $developer['developer']->first_name . ' "' . $developer['developer']->nickname . '" ' . $developer['developer']->last_name }}
                     </li>
+                    @php
+                        $statusDetails = $status_badge($developer);
+                    @endphp
+                    <span class="{{ $statusDetails['class'] }} text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{ $statusDetails['text'] }}</span>
                 @endforeach
             </ol>
         </div>
@@ -85,8 +112,12 @@
             <ol class="list-decimal ml-16 text-md">
                 @foreach ($developers['Documentation'] as $developer)
                     <li class="my-1">
-                        {{ $developer->first_name . ' "' . $developer->nickname . '" ' . $developer->last_name }}
+                        {{ $developer['developer']->first_name . ' "' . $developer['developer']->nickname . '" ' . $developer['developer']->last_name }}
                     </li>
+                    @php
+                        $statusDetails = $status_badge($developer);
+                    @endphp
+                    <span class="{{ $statusDetails['class'] }} text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{ $statusDetails['text'] }}</span>
                 @endforeach
             </ol>
         </div>
@@ -105,8 +136,12 @@
             <ol class="list-decimal ml-16 text-md">
                 @foreach ($developers['Finance'] as $developer)
                     <li class="my-1">
-                        {{ $developer->first_name . ' "' . $developer->nickname . '" ' . $developer->last_name }}
+                        {{ $developer['developer']->first_name . ' "' . $developer['developer']->nickname . '" ' . $developer['developer']->last_name }}
                     </li>
+                    @php
+                        $statusDetails = $status_badge($developer);
+                    @endphp
+                    <span class="{{ $statusDetails['class'] }} text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{ $statusDetails['text'] }}</span>
                 @endforeach
             </ol>
         </div>
@@ -125,8 +160,12 @@
             <ol class="list-decimal ml-16 text-md">
                 @foreach ($developers['Publicity'] as $developer)
                     <li class="my-1">
-                        {{ $developer->first_name . ' "' . $developer->nickname . '" ' . $developer->last_name }}
+                        {{ $developer['developer']->first_name . ' "' . $developer['developer']->nickname . '" ' . $developer['developer']->last_name }}
                     </li>
+                    @php
+                        $statusDetails = $status_badge($developer);
+                    @endphp
+                    <span class="{{ $statusDetails['class'] }} text-sm font-medium me-2 px-2.5 py-0.5 rounded">{{ $statusDetails['text'] }}</span>
                 @endforeach
             </ol>
         </div>
