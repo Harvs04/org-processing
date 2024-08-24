@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreign('applicant_id')->references('id')->on('users');
             $table->foreign('developer_id')->references('id')->on('users');
             $table->enum('status', ['Pending', 'In progress', 'Accomplished']);
-            $table->date('end_date')->default('2024-12-25');
             $table->timestamps();
         });
     }
