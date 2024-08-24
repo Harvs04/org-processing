@@ -17,14 +17,16 @@ class Reporting extends Component
     public $developers;
     public $total_reporting_count;
     public $accomplished_reporting_count;
+    public $overlap;
 
-    public function __construct($startdate, $enddate, $developers, $totalreportingcount, $accomplishedreportingcount)
+    public function __construct($startdate, $enddate, $developers, $totalreportingcount, $accomplishedreportingcount, $overlap)
     {
         $this->start_date = $startdate;
         $this->end_date = $enddate;
         $this->developers = $developers;
         $this->total_reporting_count = $totalreportingcount;
         $this->accomplished_reporting_count = $accomplishedreportingcount;
+        $this->overlap = $overlap;
     }
 
     public function status_badge($developer) 
@@ -73,7 +75,8 @@ class Reporting extends Component
             'end_date' => $this->end_date, 
             'developers' => $this->developers,
             'total_reporting_count' => $this->total_reporting_count,
-            'accomplished_reporting_count' => $this->accomplished_reporting_count
+            'accomplished_reporting_count' => $this->accomplished_reporting_count,
+            'overlap' => $this->overlap
         ]);
     }
 }

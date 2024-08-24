@@ -41,11 +41,66 @@ class ApplicantController extends Controller
 
     public function reporting_list ()
     {
-        $this->user = Auth::user();
-
+        $this->user = Auth::user();                                             // current user
+        $all_developers = User::where('role', 'Developer')->get();              // all developers
         $reportings = Reporting::where('applicant_id', $this->user->id)->get(); // array of reportings assigned to applicant
+        
+        // all teams of developers with all of its reporters per developer
+        $teams = [
+            'Academic' => [],
+            'Logistics' => [],
+            'Membership' => [],
+            'Documentation' => [],
+            'Finance' => [],
+            'Publicity' => [] 
+        ];
+
+        $overlap = [
+            'Academic' => [],
+            'Logistics' => [],
+            'Membership' => [],
+            'Documentation' => [],
+            'Finance' => [],
+            'Publicity' => [] 
+        ];
+
+        foreach ($all_developers as $developer) {
+            // all reporting records
+            $reporting_records = Reporting::where('developer_id', $developer->id)->get();
+        
+            // all applicant ids
+            $applicant_ids = $reporting_records->pluck('applicant_id');
+        
+            // get Users using applicant id
+            $reporting_applicants = User::whereIn('id', $applicant_ids)->get();
+            
+            // insert the user in its reporting developer
+            if (!isset($teams[$developer->team])) {
+                $teams[$developer->team] = [];
+            }
+        
+            $teams[$developer->team][$developer->id] = $reporting_applicants;
+        }
+
+        foreach ($reportings as $reporting) {
+            $developerId = $reporting->developer_id;
+            
+            foreach ($teams as $teamName => $developers) {
+                if (isset($developers[$developerId])) {
+                    // Ensure that the team exists in the overlap array
+                    if (!isset($overlap[$teamName])) {
+                        $overlap[$teamName] = [];
+                    }
+                    
+                    // Copy the developer and their reporting applicants to the overlap array
+                    $overlap[$teamName][$developerId] = $developers[$developerId];
+                }
+            }
+        }
+        
         $total_reporting_count = count($reportings);
         $accomplished_reporting_count = 0;
+
 
         foreach ($reportings as $reporting) {
             if ($reporting->status !== "Accomplished" && now()->greaterThan(Carbon::parse(self::$REPORTING_END_DATE))) {
@@ -74,7 +129,7 @@ class ApplicantController extends Controller
                 if (isset($developers[$team])) {
                     $developers[$team][] = [
                         'developer' => $developer,
-                        'status' => $reporting->status // Assuming 'status' is a column in your 'reportings' table
+                        'status' => $reporting->status
                     ];
                 }
             }
@@ -83,6 +138,7 @@ class ApplicantController extends Controller
         return view('Applicant.reporting', [
             'nickname', $this->user->nickname,
             'developers' => $developers, 
+            'overlap' => $overlap,
             'total_reporting_count' => $total_reporting_count,
             'accomplished_reporting_count' => $accomplished_reporting_count,
             'start_date' => self::$REPORTING_START_DATE,
