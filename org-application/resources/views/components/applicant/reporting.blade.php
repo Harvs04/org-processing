@@ -197,30 +197,32 @@
             </svg>
         </label>
         
-        <ul class="ml-5 team-dropdown-menu cursor-pointer text-white bg-gray-200 dark:bg-gray-800 bg-opacity-25 rounded-lg text-md font-light dark:text-white px-5 py-2.5 w-full">
+        <ul class="team-dropdown-menu hidden ml-5 cursor-pointer text-white bg-gray-200 dark:bg-gray-800 bg-opacity-25 rounded-lg text-md font-light dark:text-white px-5 py-2.5 w-full">
             @foreach($overlap as $team => $devs)
-                <li>
+                <li class="relative">
                     <input type="radio" id="team-{{ $team }}" name="team" class="hidden">
                     <label for="team-{{ $team }}" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                         {{ $team }}
                     </label>
                     
-                    <ul class="developer-dropdown-menu">
+                    <ol class="list-decimal developer-dropdown-menu hidden ml-5">
                         @foreach($devs as $devId => $applicants)
-                            <li>
+                            <li class="relative">
                                 <input type="radio" id="dev-{{ $devId }}" name="developer-{{ $team }}" class="hidden">
                                 <label for="dev-{{ $devId }}" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
                                     Developer ID: {{ $devId }}
                                 </label>
                                 
-                                <ul class="applicants-list">
+                                <ol class="list-decimal applicants-list hidden ml-5">
                                     @foreach($applicants as $applicant)
-                                        <li>{{ $applicant->first_name }}</li>
+                                        <li class="px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+                                            {{ $applicant->first_name }}
+                                        </li>
                                     @endforeach
-                                </ul>
+                                </ol>
                             </li>
                         @endforeach
-                    </ul>
+                    </ol>
                 </li>
             @endforeach
         </ul>
@@ -228,11 +230,6 @@
 </div>
 
 <style>
-    /* Hide all dropdown menus initially */
-    .team-dropdown-menu, .developer-dropdown-menu, .applicants-list {
-        display: none;
-    }
-
     /* Show team dropdown menu when checkbox is checked */
     #teamDropdownToggle:checked + label + .team-dropdown-menu {
         display: block;
