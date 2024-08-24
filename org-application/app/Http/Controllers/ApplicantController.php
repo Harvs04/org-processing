@@ -8,12 +8,13 @@ use App\Models\Group;
 use App\Models\PanelInterview;
 use App\Models\User;
 use App\Models\Reporting;
+use Carbon\Carbon;
 
 class ApplicantController extends Controller
 {
 
-    public static $REPORTING_START_DATE = "2025-01-01";
-    public static $REPORTING_END_DATE = "2025-01-15";
+    public static $REPORTING_START_DATE = '2025-01-01';
+    public static $REPORTING_END_DATE = '2025-01-15';
     public $user;
     public function index()
     {
@@ -43,6 +44,19 @@ class ApplicantController extends Controller
         $this->user = Auth::user();
 
         $reportings = Reporting::where('applicant_id', $this->user->id)->get(); // array of reportings assigned to applicant
+        $total_reporting_count = count($reportings);
+        $accomplished_reporting_count = 0;
+
+        foreach ($reportings as $reporting) {
+            if ($reporting->status !== "Accomplished" && now()->greaterThan(Carbon::parse(self::$REPORTING_END_DATE))) {
+                $reporting->status = "Failed";
+            }
+
+            if ($reporting->status === "Accomplished") {
+                $accomplished_reporting_count++;
+            }
+        }
+
         $developers = [
             'Academic' => [],
             'Logistics' => [],
@@ -55,11 +69,13 @@ class ApplicantController extends Controller
         foreach ($reportings as $reporting) {
             $developer = User::find($reporting->developer_id);
             if ($developer) {
-                // Assume the developer has a 'team' attribute
                 $team = $developer->team;
         
                 if (isset($developers[$team])) {
-                    $developers[$team][] = $developer;
+                    $developers[$team][] = [
+                        'developer' => $developer,
+                        'status' => $reporting->status // Assuming 'status' is a column in your 'reportings' table
+                    ];
                 }
             }
         }
@@ -67,6 +83,8 @@ class ApplicantController extends Controller
         return view('Applicant.reporting', [
             'nickname', $this->user->nickname,
             'developers' => $developers, 
+            'total_reporting_count' => $total_reporting_count,
+            'accomplished_reporting_count' => $accomplished_reporting_count,
             'start_date' => self::$REPORTING_START_DATE,
             'end_date' => self::$REPORTING_END_DATE
         ]);
