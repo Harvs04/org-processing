@@ -15,12 +15,14 @@ class PanelInterview extends Component
      * Create a new component instance.
      */
     public $group;
+    public $panel_interview_date;
     public $panel;
     public $groupmates = [];
 
-    public function __construct($group, $panel, $groupmates)
+    public function __construct($group, $paneldate, $panel, $groupmates)
     {
         $this->group = $group;
+        $this->panel_interview_date = $paneldate;
         $this->panel = $panel;
         $this->groupmates = $groupmates;
     }
@@ -30,6 +32,6 @@ class PanelInterview extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.applicant.panel-interview', ['group' => $this->group, 'panel' => $this->panel]);
+        return view('components.applicant.panel-interview', ['group' => $this->group, 'paneldate' => $this->panel_interview_date, 'panel' => $this->panel]);
     }
 }

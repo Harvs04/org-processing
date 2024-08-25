@@ -14,7 +14,6 @@ return new class extends Migration
         if (!Schema::hasTable('panel_interviews')) {
             Schema::create('panel_interviews', function (Blueprint $table) {
                 $table->id();
-                $table->date('date');
                 $table->time('start_time');
                 $table->time('end_time');
                 $table->string('location');

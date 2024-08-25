@@ -1,7 +1,7 @@
 <div class="p-6 lg:p-8 bg-white dark:bg-gray-800 dark:bg-gradient-to-bl dark:from-gray-700/50 dark:via-transparent border-b border-gray-200 dark:border-gray-700">
     @if (isset($panel) >= 1)
         <h1 class="text-2xl font-medium text-gray-900 dark:text-white">
-            Your Panel Interview will proceed at {{ $panel->location }} on {{ date('F j, Y', strtotime($panel->date)) }} at exactly {{ date('g:i a', strtotime($panel->start_time)) }}!
+            Your Panel Interview will proceed at {{ $panel->location }} on {{ date('F j, Y', strtotime($paneldate)) }} at exactly {{ date('g:i a', strtotime($panel->start_time)) }}!
         </h1>
         @php
             $status = $panel->status;
