@@ -110,6 +110,7 @@ class ApplicantController extends Controller
             if ($reporting->status === "Accomplished") {
                 $accomplished_reporting_count++;
             }
+            $reporting->save();
         }
 
         $developers = [
