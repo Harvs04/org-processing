@@ -84,16 +84,18 @@ class ApplicantController extends Controller
 
         foreach ($reportings as $reporting) {
             $developerId = $reporting->developer_id;
+            $developer = User::where('id', $reporting->developer_id)->first();
+            $developerFirstName = $developer->first_name . ' "' . $developer->nickname . '" ' . $developer->last_name;
             
             foreach ($teams as $teamName => $developers) {
                 if (isset($developers[$developerId])) {
-                    // Ensure that the team exists in the overlap array
+                    // ensure that the team exists in the overlap array
                     if (!isset($overlap[$teamName])) {
                         $overlap[$teamName] = [];
                     }
                     
-                    // Copy the developer and their reporting applicants to the overlap array
-                    $overlap[$teamName][$developerId] = $developers[$developerId];
+                    // copy the developer and their reporting applicants to the overlap array
+                    $overlap[$teamName][$developerFirstName] = $developers[$developerId];
                 }
             }
         }
