@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('developer_id');
             $table->foreign('applicant_id')->references('id')->on('users');
             $table->foreign('developer_id')->references('id')->on('users');
-            $table->enum('status', ['Pending', 'In progress', 'Accomplished']);
+            $table->enum('status', ['Pending', 'In progress', 'Accomplished', 'Failed']);
             $table->timestamps();
         });
     }
