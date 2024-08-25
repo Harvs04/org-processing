@@ -31,5 +31,6 @@ Route::middleware([
 
         Route::get('/panel-interview/{nickname}', [ApplicantController::class, 'index'])->name('panel-interview');
         Route::get('/reporting/{nickname}', [ApplicantController::class, 'reporting_list'])->name('reporting');
+        Route::get('/mdi/{nickname}', [ApplicantController::class, 'mdi'])->name('mdi');
     });
 });

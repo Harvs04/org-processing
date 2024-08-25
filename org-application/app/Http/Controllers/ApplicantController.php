@@ -8,6 +8,7 @@ use App\Models\Group;
 use App\Models\PanelInterview;
 use App\Models\User;
 use App\Models\Reporting;
+use App\Models\MillionDollarIdea;
 use Carbon\Carbon;
 
 class ApplicantController extends Controller
@@ -15,6 +16,9 @@ class ApplicantController extends Controller
 
     public static $REPORTING_START_DATE = '2025-01-01';
     public static $REPORTING_END_DATE = '2025-01-15';
+    public static $PANEL_INTERVIEW_DATE = '2024-12-25';
+    public static $MDI_SUBMISSION_DATE = '2025-01-16';
+    public static $MDI_PRESENTATION_DATE = '2025-01-30';
     public $user;
     public function index()
     {
@@ -32,8 +36,8 @@ class ApplicantController extends Controller
             $groupmates = null;
         }
         return view('Applicant.panel-interview', [
-            'nickname' => $this->user->nickname, 
             'group' => $group,
+            'panel_interview_date' => self::$PANEL_INTERVIEW_DATE,
             'panel' => $panel_interview,
             'groupmates' => $groupmates
         ]);
@@ -139,13 +143,35 @@ class ApplicantController extends Controller
         }
 
         return view('Applicant.reporting', [
-            'nickname', $this->user->nickname,
             'developers' => $developers, 
             'overlap' => $overlap,
             'total_reporting_count' => $total_reporting_count,
             'accomplished_reporting_count' => $accomplished_reporting_count,
             'start_date' => self::$REPORTING_START_DATE,
             'end_date' => self::$REPORTING_END_DATE
+        ]);
+    }
+
+    public function mdi()
+    {
+        $this->user = Auth::user();
+        $mdi = null;
+        $groupmates = null;
+
+        $group = Group::where('user_id', $this->user->id)->where('type', 'mdi')->get()->first();
+        if (isset($group)) {
+            $mdi = MillionDollarIdea::where('group_id', $group->applicant_group_id)->get()->first();
+            $groupmates = User::join('groups', 'users.id', '=', 'groups.user_id')
+                ->where('groups.applicant_group_id', $group->applicant_group_id)
+                ->select('users.*')
+                ->get();
+        }
+
+        return view('Applicant.mdi', [
+            'deadline' => self::$MDI_SUBMISSION_DATE,
+            'presentation_date' => self::$MDI_PRESENTATION_DATE,
+            'mdi' => $mdi,
+            'groupmates' => $groupmates
         ]);
     }
 }
